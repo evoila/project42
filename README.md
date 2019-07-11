@@ -1,7 +1,7 @@
 # project42
 Answer to the Ultimate Question of Life, the Universe, and Everything - Extension Project to the Cloud Foundry platform
 
-# About project42
+## About project42
 Cloud Foundry's most significant achievement is the 'cf push'-experience which simplifies the developers life in so many ways. But at day two, this experience gets lost because it gets well hidden in some CI/CD pipeline. Writing CI/CD pipelines can be hard and cumbersome.
 
 Wouldn't it be nice to have the same experience of 'cf push' with CI/CD? But is that possible? But every CI/CD pipeline is different. 
