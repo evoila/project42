@@ -1,35 +1,37 @@
 ---
 resources:
-- name: repo
-  type: git
-  source:
-    uri: ((git_url))
-    branch: master
-- name: manage-cf
-  type: docker-image
-  source:
-    repository: kinja/pipeline-image
-- name: build-java
-  type: docker-image
-  source:
-    repository: openjdk
-    tag: 8-jdk
+  - name: repo
+    type: git
+    source:
+      uri: ((git_url))
+      branch: master
+
+  - name: ci-image
+    type: docker-image
+    source:
+      repository: kinja/pipeline-image
+
+  - name: java-image
+    type: docker-image
+    source:
+      repository: openjdk
+      tag: 8-jdk
 
 jobs:
-- name: fourty-two
+- name: forty-two
   plan:
-  - aggregate:
+  - in_parallel:
     - get: repo
       trigger: true
       version: {ref: ((git_rev))}
-    - get: build-java
-    - get: manage-cf
-  - aggregate:
+    - get: java-image
+    - get: ci-image
+  - in_parallel:
     - task: build-code
       params:
         APP_NAME: ((app_name))
         GIT_COMMIT: ((git_rev))
-      image: build-java
+      image: java-image
       config:
         platform: linux
         inputs:
@@ -80,7 +82,7 @@ jobs:
         CF_ORG: ((cf_source_org))
         CF_SPACE: ((cf_source_space))
         APP_NAME: ((app_name))
-      image: manage-cf
+      image: ci-image
       config:
         platform: linux
         outputs:
@@ -103,7 +105,7 @@ jobs:
       CF_SPACE: ((cf_target_space))
       APP_NAME: ((app_name))
       ROUTE: ((route))
-    image: manage-cf
+    image: ci-image
     config:
       platform: linux
       inputs:
