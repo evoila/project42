@@ -10,5 +10,14 @@ With buildpacks we solved the same problem for application runtimes to get 'cf p
 
 Benjamin Gandon and Christian Brinker present their work on project 42, their Cloud Foundry North America 2019 Summit's hackathon winning approach, until now.
 
-project42 aims to extend the 'cf push' experience to CI/CD. Creating standards in CI/CD through pipeline templates.
+project42 aims to extend the 'cf push' experience to CI/CD by creating standards in CI/CD through pipeline templates.
+
+## Usage
+To use project 42 you should have Cloud Foundry, an application already pushed to a Git repository accessible from a Concourse Server. For usage run the following steps:
+1. Checkout the repository from Github. 
+2. Install an configure Golang on your machine.
+3. Install Cloud Foundry CLI matching your OS System
+4. Run `go build && cf install-plugin project42 -f` inside of the repository folder
+5. Run `cf careless-delivery --help` or `cf spin-up-prod` for further instructions
+6. Run `cf careless-delivery` from your application's folder (with the application being pushed to a git repository with remote `origin/master`; actual we use this within Concourse and the CLI)
 
